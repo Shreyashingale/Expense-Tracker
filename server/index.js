@@ -1,4 +1,6 @@
 const express = require('express');
+
+const User = require('./models/User');
 require('../server/db/connect');
 const app = express();
 const port = 5000;
