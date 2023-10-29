@@ -10,6 +10,13 @@ router.get('/' , (req , res)=>{
 
 
 //register api
+/*
+register api flow
+=>get user values from req body
+=> and then create a new instance of the user values
+=> save the new instance
+*/
+
 router.post('/register' , async(req , res)=>{
     try {
             console.log(req.body);
@@ -36,4 +43,31 @@ router.post('/register' , async(req , res)=>{
     }
 })
 
+
+
+//login api
+//db operations need to be async await
+/*
+=> here first step is same get user credentials
+=> then find user by email
+=> after finding match the password
+
+*/
+router.post('/login' , async(req , res)=>{
+    console.log(req.body.email);
+    const userLogin = await User.findOne({email:req.body.email});
+    if(userLogin){
+        if(userLogin.password === req.body.password){
+                res.status(200).json({message : 'User Logged in'});
+
+        }
+        else{
+            res.status(404).json({message : "Password Not Matched"});
+        }
+
+    }
+    else{
+        res.status(404).json({message : 'User Not Found'})
+    }
+})
 module.exports = router;
