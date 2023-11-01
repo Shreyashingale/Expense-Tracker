@@ -1,13 +1,29 @@
 import React , {useState}  from 'react'
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 const Register = () => {
-
+  const baseUrl = 'http://localhost:5000';
   const [userName , setUserName] = useState('');
   const [email , setEmail] = useState('');
   const [password , setPassword] = useState('');
   const registerUser = (e)=>{
     e.preventDefault();
     console.log("User Registered");
+    axios.post(`${baseUrl}/register` , {
+      username : userName ,
+      email : email ,
+      password : password ,
+    })
+    .then((res)=>{
+      console.log(res);
+      if(res.data.userRegisterStatus === 1){
+        <Link to='/login'></Link>
+      }
+      console.log('User Registered');
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
     
   }
 

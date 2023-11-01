@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 
+
+
+
+
+
 //path and a callback function second parameter
 router.get('/' , (req , res)=>{
     res.send("Router Visited");
@@ -22,7 +27,7 @@ router.post('/register' , async(req , res)=>{
             console.log(req.body);
             if(await User.findOne({email : req.body.email})){
                 console.log("User existed");
-                return res.status(400).json({ message: 'User Already Existed' });
+                return res.status(400).json({ message: 'User Already Existed', userRegisterStatus : 0});
             }
 
             const newUser = new User({
@@ -36,7 +41,7 @@ router.post('/register' , async(req , res)=>{
             }) 
 
             await newUser.save();
-            res.status(201).json({ message: 'User registered successfully' });
+            res.status(201).json({ message: 'User registered successfully' , userRegisterStatus : 1 });
 
     } catch (error) {
         
@@ -58,11 +63,11 @@ router.post('/login' , async(req , res)=>{
     const userLogin = await User.findOne({email:req.body.email});
     if(userLogin){
         if(userLogin.password === req.body.password){
-                res.status(200).json({message : 'User Logged in'});
+                res.status(200).json({message : 'User Logged in' , userLoginStatus : 1});
 
         }
         else{
-            res.status(404).json({message : "Password Not Matched"});
+            res.status(404).json({message : "Password Not Matched" , userLoginStatus : 0});
         }
 
     }

@@ -6,6 +6,11 @@ const port = 5000;
 const router = require('../server/router/router');
 const bodyParser = require('body-parser');
 
+
+//why to use cors =>
+//https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9
+const cors=require("cors");
+app.use(cors()) // Use this after the variable declaration
 //needed for reading data send in the body as json
 // Middleware functions can intercept and process incoming HTTP requests and outgoing HTTP responses
 app.use(bodyParser.json());
