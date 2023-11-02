@@ -1,15 +1,16 @@
 import React , {useState}  from 'react'
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const Register = () => {
+  const navigate = useNavigate();
   const baseUrl = 'http://localhost:5000';
   const [userName , setUserName] = useState('');
   const [email , setEmail] = useState('');
   const [password , setPassword] = useState('');
-  const registerUser = (e)=>{
+  const registerUser = async(e)=>{
     e.preventDefault();
     console.log("User Registered");
-    axios.post(`${baseUrl}/register` , {
+    await axios.post(`${baseUrl}/register` , {
       username : userName ,
       email : email ,
       password : password ,
@@ -17,7 +18,7 @@ const Register = () => {
     .then((res)=>{
       console.log(res);
       if(res.data.userRegisterStatus === 1){
-        <Link to='/login'></Link>
+        navigate('/login');
       }
       console.log('User Registered');
     })

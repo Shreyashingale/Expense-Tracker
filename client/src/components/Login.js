@@ -1,14 +1,15 @@
 import React , {useState} from 'react'
 import axios from 'axios';
-
+import {useNavigate} from 'react-router-dom';
 const Login = ()=>{
+    const navigate = useNavigate();
     const baseUrl = 'http://localhost:5000';
     const [email , setEmail] = useState('');
     const [password , setPassword] = useState('');
-    const loginUser = (e)=>{
+    const loginUser = async(e)=>{
         e.preventDefault();
         console.log("User Login button clicked");
-        axios.post(`${baseUrl}/login` , {
+        await axios.post(`${baseUrl}/login` , {
             email : email ,
             password  : password
         }
@@ -16,6 +17,9 @@ const Login = ()=>{
         .then((res)=>{
             console.log(res);
             console.log('User logged in');
+            if(res.data.userLoginStatus === 1){
+                navigate('/Account');
+            }
         })
         .catch((error)=>{
             console.log(error);
