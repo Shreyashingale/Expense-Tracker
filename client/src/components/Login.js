@@ -17,7 +17,9 @@ const Login = ()=>{
         .then((res)=>{
             console.log(res);
             console.log('User logged in');
-            if(res.data.userLoginStatus === 1){
+            if(res.data.userLoginStatus === 1 && res.data.token !=null){
+                console.log(res.data.token);
+                localStorage.setItem('token' , res.data.token);
                 navigate('/Account');
             }
         })
