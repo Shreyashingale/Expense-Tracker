@@ -91,16 +91,18 @@ router.get('/userDetails/:email' , async(req , res)=>{
         res.status(200).json({message : "Send Data" ,userInfo : userInfo});
     }
     else{
-        res.status(404).json({message : 'User Not Found' , userInfo : null});
+        res.status(404).json({message : 'User Not Found' , userInfo : {}});
     }
 })
 
 
 //update user income api
+// for updating api by email we are getting email by url and data through body and then we are running query in mongofb by mail and for second parameter using the data do update using set only that parameter is updated
 router.put('/updateIncome/:email' , async(req ,res)=>{
 
     const email = req.params.email;
     const data = req.body.income;
+    console.log(data);
     const updatedUser = await User.findOneAndUpdate({email :email} , {$set : {income : data}});
 
     console.log(updatedUser);
@@ -114,5 +116,25 @@ router.put('/updateIncome/:email' , async(req ,res)=>{
 })
 
 
+
+// api to update transactions;
+
+// here we are doing same updating by email and getting data in body
+router.put('/updateTransactions/:email' , async(req , res)=>{
+    
+    const email = req.params.email;
+    console.log(email);
+    const data = req.body;
+    const updatedUser = await User.findOneAndUpdate({email : email} , {transactions : data});
+    console.log(updatedUser);
+
+    if(updatedUser){
+        res.status(200).json({message : "Updated Transactions"});
+    }
+    else{
+        res.status(404).json({message : "Not Updated"});
+    }
+
+})
 
 module.exports = router;

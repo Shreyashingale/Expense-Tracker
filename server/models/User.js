@@ -41,6 +41,7 @@ const userSchema = new Schema({
         },
         tdate : {
             type : Date ,    
+            default : Date.now()
         }
     }]
     

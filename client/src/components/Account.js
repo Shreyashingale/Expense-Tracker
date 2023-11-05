@@ -18,13 +18,18 @@ const Account = () => {
 
     }
     const updateUserIncome = ()=>{
-        axios.put(`${baseUrl}//updateIncome/${user}` , userIncome)
+        // the second parameteris a req body object
+        axios.put(`${baseUrl}/updateIncome/${user}` , {
+            income : userIncome
+        })
         .then((res)=>{
+            console.log("Updated");
             console.log(res);
         })
         .catch((error)=>{
             console.log(error);
         })
+        window.location.reload(false);
     }
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -34,7 +39,6 @@ const Account = () => {
             console.log(user);
             setUser(user.email);
             console.log("from account page");
-            console.log(token);
         }
         axios.get(`${baseUrl}/userDetails/${user}`)
         .then((res)=>{
@@ -45,7 +49,7 @@ const Account = () => {
             console.log(error);
         })
 
-    }, [user , updateUserIncome])
+    }, [user])
     return (
 
         <div>
@@ -61,7 +65,7 @@ const Account = () => {
                     <div>
                         <h2>Account</h2>
                         <h2>Email : {userDetails.email}</h2>
-                        <h2>User : {userDetails.user}</h2>
+                        <h2>User : {userDetails.username}</h2>
                         <h2>Income : {userDetails.income}</h2>
                         <h2>Expenses : {userDetails.expenses}</h2>
                         
