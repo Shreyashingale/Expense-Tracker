@@ -53,7 +53,7 @@ const Account = () => {
     return (
 
         <div>
-
+            
             Account
             Welcome {user};
 

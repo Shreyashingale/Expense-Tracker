@@ -8,6 +8,24 @@ const Transactions = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [transactions , setTransactions] = useState([]);
+    const [dummy , setDummy] = useState('');
+
+    const handleDummyChange = (e)=>{
+        setDummy(e.target.value);
+    }
+    // const [tId , setTId] = useState('');
+    // const [tType , setTType] = useState('');
+    // const [tExpense , setTExpense] = useState('');
+
+    // const handleTIdChange = (e)=>{
+    //     setTId(e.target.value);
+    // }
+    // const handleTTypeChange = (e)=>{
+    //     setTType(e.target.value);
+    // }
+    // const handleTExpenseChange = (e)=>{
+    //     setTExpense(e.target.value);
+    // }
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -33,20 +51,30 @@ const Transactions = () => {
 
         <div>
             Transactions
-           
+            {console.log("changes")};
+           {/* i think js render every time any state chnages */}
             {
                 transactions && transactions.map((transaction)=>{
                     console.log(transaction);
                    return( <div key = {transaction.tid}>
                         <h3>Transaction</h3>
                         <p>tid : {transaction.tid}</p>
-                        <p>tid : {transaction.ttype}</p>
-                        <p>tid : {transaction.expense}</p>
+                        <p>T type : {transaction.ttype}</p>
+                        <p>expense : {transaction.texpense}</p>
                         
                     </div>
                    )
                 })
             }
+
+            {/* <label>Tid : </label>
+            <input type="text"  onChange={handleTIdChange}/>
+            <label>Ttype : </label>
+            <input type="text" onChange={handleTTypeChange}/>
+            <label>Expense</label>
+            <input type="text"  onChange={handleTExpenseChange}/> */}
+            <input type="text" onChange={handleDummyChange}/>
+            <button>Add Transaction</button>
         </div>
     )
 }
