@@ -129,7 +129,7 @@ router.put('/updateTransactions/:email' , async(req , res)=>{
     console.log(updatedUser);
 
     if(updatedUser){
-        res.status(200).json({message : "Updated Transactions"});
+        res.status(200).json({message : "Updated Transactions" , data : updatedUser});
     }
     else{
         res.status(404).json({message : "Not Updated"});

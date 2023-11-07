@@ -8,24 +8,37 @@ const Transactions = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [transactions , setTransactions] = useState([]);
-    const [dummy , setDummy] = useState('');
 
-    const handleDummyChange = (e)=>{
-        setDummy(e.target.value);
+    
+    const [tId , setTId] = useState('');
+    const [tType , setTType] = useState('');
+    const [tExpense , setTExpense] = useState('');
+
+    const handleTIdChange = (e)=>{
+        console.log(e.target.value);
+        setTId(e.target.value);
     }
-    // const [tId , setTId] = useState('');
-    // const [tType , setTType] = useState('');
-    // const [tExpense , setTExpense] = useState('');
+    const handleTTypeChange = (e)=>{
+        console.log(e.target.value);
+        setTType(e.target.value);
+    }
+    const handleTExpenseChange = (e)=>{
+        console.log(e.target.value);
+        setTExpense(e.target.value);
+    }
 
-    // const handleTIdChange = (e)=>{
-    //     setTId(e.target.value);
-    // }
-    // const handleTTypeChange = (e)=>{
-    //     setTType(e.target.value);
-    // }
-    // const handleTExpenseChange = (e)=>{
-    //     setTExpense(e.target.value);
-    // }
+
+    const handleAddTransaction = ()=>{
+        const data = [...transactions , {tid : tId , ttype : tType , texpense :tExpense}];
+        axios.put(`${baseUrl}/updateTransactions/${email}` , data)
+            .then((res)=>{
+                setTransactions(res.data.data.transactions)
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
+        
+    }
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -37,6 +50,7 @@ const Transactions = () => {
             navigate('/logout');
         }
         console.log(email);
+        //here the email is state so async in behaviour so that's why 
         axios.get(`${baseUrl}/userDetails/${email}`)
         .then((res)=>{
             console.log(res.data.userInfo[0].transactions);
@@ -46,16 +60,16 @@ const Transactions = () => {
             console.log(error);
         })
 
+        
+        
     }, [email])
     return (
 
         <div>
             Transactions
-            {console.log("changes")};
            {/* i think js render every time any state chnages */}
             {
                 transactions && transactions.map((transaction)=>{
-                    console.log(transaction);
                    return( <div key = {transaction.tid}>
                         <h3>Transaction</h3>
                         <p>tid : {transaction.tid}</p>
@@ -67,14 +81,13 @@ const Transactions = () => {
                 })
             }
 
-            {/* <label>Tid : </label>
+            <label>Tid : </label>
             <input type="text"  onChange={handleTIdChange}/>
             <label>Ttype : </label>
             <input type="text" onChange={handleTTypeChange}/>
             <label>Expense</label>
-            <input type="text"  onChange={handleTExpenseChange}/> */}
-            <input type="text" onChange={handleDummyChange}/>
-            <button>Add Transaction</button>
+            <input type="text"  onChange={handleTExpenseChange}/>
+            <button onClick={handleAddTransaction}>Add Transaction</button>
         </div>
     )
 }
