@@ -123,11 +123,8 @@ router.put('/updateIncome/:email' , async(req ,res)=>{
 router.put('/updateTransactions/:email' , async(req , res)=>{
     
     const email = req.params.email;
-    console.log(email);
     const data = req.body;
-    const updatedUser = await User.findOneAndUpdate({email : email} , {transactions : data});
-    console.log(updatedUser);
-
+    const updatedUser = await User.findOneAndUpdate({email : email} , {transactions : data} ,{ new: true });
     if(updatedUser){
         res.status(200).json({message : "Updated Transactions" , data : updatedUser});
     }

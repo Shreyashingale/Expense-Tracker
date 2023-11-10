@@ -31,12 +31,10 @@ const Login = ()=>{
 
     const handleEmailChange = (e)=>{
         setEmail(e.target.value);
-        console.log(e.target.value);
     }
 
     const handlePasswordChange = (e)=>{
         setPassword(e.target.value);
-        console.log(e.target.value);
     }
     return (
 

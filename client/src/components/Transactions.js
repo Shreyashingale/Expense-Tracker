@@ -7,37 +7,37 @@ const Transactions = () => {
     const baseUrl = 'http://localhost:5000';
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
-    const [transactions , setTransactions] = useState([]);
+    const [transactions, setTransactions] = useState([]);
 
-    
-    const [tId , setTId] = useState('');
-    const [tType , setTType] = useState('');
-    const [tExpense , setTExpense] = useState('');
 
-    const handleTIdChange = (e)=>{
-        console.log(e.target.value);
+    const [tId, setTId] = useState('');
+    const [tType, setTType] = useState('');
+    const [tExpense, setTExpense] = useState('');
+
+    const handleTIdChange = (e) => {
         setTId(e.target.value);
     }
-    const handleTTypeChange = (e)=>{
-        console.log(e.target.value);
+    const handleTTypeChange = (e) => {
         setTType(e.target.value);
     }
-    const handleTExpenseChange = (e)=>{
-        console.log(e.target.value);
+    const handleTExpenseChange = (e) => {
         setTExpense(e.target.value);
     }
 
 
-    const handleAddTransaction = ()=>{
-        const data = [...transactions , {tid : tId , ttype : tType , texpense :tExpense}];
-        axios.put(`${baseUrl}/updateTransactions/${email}` , data)
-            .then((res)=>{
-                setTransactions(res.data.data.transactions)
+    const handleAddTransaction = () => {
+        console.log("add transactions");
+        const data = [...transactions, { tid: tId, ttype: tType, texpense: tExpense }];
+        console.log(data);
+        axios.put(`${baseUrl}/updateTransactions/${email}`, data)
+            .then((res) => {
+                setTransactions(res.data.data.transactions);
+                console.log(res.data.data.transactions);
             })
-            .catch((error)=>{
+            .catch((error) => {
                 console.log(error);
             })
-        
+
     }
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -52,41 +52,41 @@ const Transactions = () => {
         console.log(email);
         //here the email is state so async in behaviour so that's why 
         axios.get(`${baseUrl}/userDetails/${email}`)
-        .then((res)=>{
-            console.log(res.data.userInfo[0].transactions);
-            setTransactions(res.data.userInfo[0].transactions);
-        })
-        .catch((error)=>{
-            console.log(error);
-        })
+            .then((res) => {
+                console.log(res.data.userInfo[0].transactions);
+                setTransactions(res.data.userInfo[0].transactions);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
 
-        
-        
+
+
     }, [email])
     return (
 
         <div>
             Transactions
-           {/* i think js render every time any state chnages */}
+            {/* i think js render every time any state chnages */}
             {
-                transactions && transactions.map((transaction)=>{
-                   return( <div key = {transaction.tid}>
+                transactions && transactions.map((transaction) => {
+                    return (<div key={transaction.tid}>
                         <h3>Transaction</h3>
                         <p>tid : {transaction.tid}</p>
                         <p>T type : {transaction.ttype}</p>
                         <p>expense : {transaction.texpense}</p>
-                        
+
                     </div>
-                   )
+                    )
                 })
             }
 
             <label>Tid : </label>
-            <input type="text"  onChange={handleTIdChange}/>
+            <input type="text" onChange={handleTIdChange} />
             <label>Ttype : </label>
-            <input type="text" onChange={handleTTypeChange}/>
+            <input type="text" onChange={handleTTypeChange} />
             <label>Expense</label>
-            <input type="text"  onChange={handleTExpenseChange}/>
+            <input type="text" onChange={handleTExpenseChange} />
             <button onClick={handleAddTransaction}>Add Transaction</button>
         </div>
     )

@@ -18,7 +18,6 @@ const Dashboard = () => {
     const [income , setIncome] = useState(0);
     const [transactions, setTransactions] = useState([]);
     const navigate = useNavigate();
-    let saving = 0;
     const data = {
         labels: ['Groceries', 'Other', 'Travelling', 'Food', 'Saving'],
         datasets: [
@@ -77,7 +76,7 @@ const Dashboard = () => {
         }
         console.log(email);
         //so by doing this we can call useeffect after updating of the transaction state and also it will not cause to render it again and again
-        if(transactions.length ==0){
+        if(transactions.length === 0){
             console.log("getting user");
             axios.get(`${baseUrl}/userDetails/${email}`)
             .then((res) => {

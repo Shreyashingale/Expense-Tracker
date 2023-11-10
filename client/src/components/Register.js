@@ -30,17 +30,14 @@ const Register = () => {
 
   const handleUserNameChange = (e)=>{
     setUserName(e.target.value);
-    console.log(e.target.value);
   }
 
   const handleEmailChange = (e)=>{
     setEmail(e.target.value);
-    console.log(e.target.value);
   }
 
   const handlePasswordChange = (e)=>{
     setPassword(e.target.value);
-    console.log(e.target.value);
   }
   return (
     <div>Register
