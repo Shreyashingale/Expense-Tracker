@@ -72,7 +72,7 @@ const Dashboard = () => {
         }
         else {
             localStorage.removeItem('token');
-            navigate('/logout');
+            navigate('/login');
         }
         console.log(email);
         //so by doing this we can call useeffect after updating of the transaction state and also it will not cause to render it again and again

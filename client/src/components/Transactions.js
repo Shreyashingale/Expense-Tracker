@@ -47,7 +47,7 @@ const Transactions = () => {
         }
         else {
             localStorage.removeItem('token');
-            navigate('/logout');
+            navigate('/login');
         }
         console.log(email);
         //here the email is state so async in behaviour so that's why 

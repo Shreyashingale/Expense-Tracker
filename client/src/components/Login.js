@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
@@ -10,6 +10,17 @@ const Login = () => {
     const baseUrl = 'http://localhost:5000';
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+
+
+    useEffect(()=>{
+        const token = localStorage.getItem('token');
+        if(token){
+            console.log('removed token');
+            localStorage.removeItem('token');
+        }
+    })
+
     const loginUser = async (e) => {
         e.preventDefault();
         console.log("User Login button clicked");

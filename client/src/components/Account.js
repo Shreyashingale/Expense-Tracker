@@ -40,6 +40,9 @@ const Account = () => {
             setUser(user.email);
             console.log("from account page");
         }
+        else{
+            navigate('/login')
+        }
         axios.get(`${baseUrl}/userDetails/${user}`)
         .then((res)=>{
             console.log(res.data.userInfo);
