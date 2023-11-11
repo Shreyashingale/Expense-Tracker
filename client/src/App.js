@@ -4,15 +4,13 @@ import Login from './components/Login';
 import Account from './components/Account';
 import Transactions from './components/Transactions';
 import Dashboard from './components/Dashboard';
-import { BrowserRouter as Router, Routes , Route } from 'react-router-dom';
+import Navigationbar from './components/Navigationbar';
+import {  Routes , Route } from 'react-router-dom';
 
 function App() {
   return (
     <div>
-      Expense Tracker
-
-
-      <Router>
+      <Navigationbar/>
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -20,7 +18,6 @@ function App() {
           <Route path = "/Transactions" element = {<Transactions/>}/>
           <Route path = "/Dashboard" element = {<Dashboard/>}/>
         </Routes>
-      </Router>
     </div>
   );
 }
