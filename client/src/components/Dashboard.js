@@ -9,6 +9,7 @@ import axios from 'axios';
 const baseUrl = 'http://localhost:5000';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+let callTransactions = 1;
 const Dashboard = () => {
     const [email, setEmail] = useState('');
     const [travelling, setTravelling] = useState(0);
@@ -76,13 +77,22 @@ const Dashboard = () => {
         }
         console.log(email);
         //so by doing this we can call useeffect after updating of the transaction state and also it will not cause to render it again and again
-        if(transactions.length === 0){
+        //here a bug is a new user and he wont have a tranasctions then it will cause rendered multiple time
+        //solved by addig a basic flag
+        if(transactions.length === 0 && callTransactions===1){
             console.log("getting user");
+            console.log(callTransactions);
             axios.get(`${baseUrl}/userDetails/${email}`)
             .then((res) => {
                 console.log(res.data.userInfo[0]);
                 setIncome(res.data.userInfo[0].income);
                 setTransactions(res.data.userInfo[0].transactions);
+                const responseArray = res.data.userInfo[0].transactions;
+                if(responseArray.length===0){
+                    console.log("Updated Value");
+                    callTransactions = 0;
+                }
+                console.log(`Updated Value ${callTransactions}`);
             })
             .catch((error) => {
                 console.log(error);
