@@ -1,0 +1,87 @@
+
+.accountMainDiv {
+    display: flex;
+    flex-direction: row;
+    height: 93vh;
+}
+
+.sideNav {
+    width: 20%;
+    height: 100%;
+    background-color: #2d2d39;
+    color: #fff;
+    padding-top: 50px;
+}
+
+.sideNav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 100px;
+}
+
+.sideNav li {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #cbcacb;
+    font-size: 1em;
+    cursor: pointer;
+
+}
+
+
+.sideNav a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+}
+
+/* Change the background color of the list item when hovered */
+.sideNav li:hover {
+    background-color: #000000;
+}
+
+.sideNav span {
+    padding: 0;
+    margin: 0;
+    margin-left: 6rem;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+
+.userDetailsDiv {
+    height: 40em;
+    width: 70em;
+    margin: 5em;
+    padding: 20px;
+    background-color: #8e84e3;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+}
+
+.userDetailsDiv ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    
+    .sideNav{
+        width: 50%;
+    }
+    .sideNav span{
+        font-size: 0.8rem;
+        margin-left: 5rem;
+    }
+    .userDetailsDiv {
+        height: 20em;
+        width: 30em;
+        margin: 5em;
+        padding: 20px;
+        background-color: #8e84e3;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+    }
+}

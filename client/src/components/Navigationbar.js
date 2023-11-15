@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Navigationbar = () => {
   return (
-    <Navbar style={{ backgroundColor: '#303142' }} variant="dark" expand="lg">
+    <Navbar style={{ backgroundColor: '#303142' , height:'7vh' }} variant="dark" expand="lg">
       <Container>
         <Navbar.Brand style={{ color: 'white', fontWeight: 'bold', fontFamily: 'Georgia' }}>
           Expense Tracker
