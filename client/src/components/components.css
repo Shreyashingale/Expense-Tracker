@@ -51,8 +51,8 @@
 
 
 .userDetailsDiv {
-    height: 40em;
-    width: 70em;
+    height: 20em;
+    width: 50em;
     margin: 5em;
     padding: 20px;
     background-color: #8e84e3;
@@ -64,6 +64,9 @@
     list-style: none;
     padding: 0;
     margin: 0;
+}
+.updateBtn{
+    
 }
 /* Media query for responsiveness */
 @media (max-width: 768px) {
@@ -78,7 +81,7 @@
     .userDetailsDiv {
         height: 20em;
         width: 30em;
-        margin: 5em;
+        margin: 1em;
         padding: 20px;
         background-color: #8e84e3;
         border: 1px solid #ddd;

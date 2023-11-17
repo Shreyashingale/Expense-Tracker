@@ -96,7 +96,7 @@ const Account = () => {
 
                 <input type="text" onChange={handleIncomeChange} />
                 <br />
-                <button onClick={updateUserIncome}>Update Income</button>
+                <button className="updateBtn" onClick={updateUserIncome}>Update Income</button>
             </div>
 
         </div>
