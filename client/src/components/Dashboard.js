@@ -6,6 +6,12 @@ import '../App.css';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 const baseUrl = 'http://localhost:5000';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -16,7 +22,7 @@ const Dashboard = () => {
     const [other, setOther] = useState(0);
     const [food, setFood] = useState(0);
     const [groceries, setGroceries] = useState(0);
-    const [income , setIncome] = useState(0);
+    const [income, setIncome] = useState(0);
     const [transactions, setTransactions] = useState([]);
     const navigate = useNavigate();
     const data = {
@@ -24,7 +30,7 @@ const Dashboard = () => {
         datasets: [
             {
                 label: '# of expenses',
-                data: [groceries, other, travelling, food, income - (food+other+groceries+travelling)],
+                data: [groceries, other, travelling, food, income - (food + other + groceries + travelling)],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -46,7 +52,34 @@ const Dashboard = () => {
 
 
 
-
+    const bull = (
+        <Box
+            component="span"
+            sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+        >
+            •
+        </Box>
+    );
+    const card = (
+        <React.Fragment>
+            <CardContent>
+                <Typography sx={{ fontSize: 18 , color :'grey' , fontWeight : 'bold' }} color="text.secondary" gutterBottom>
+                    Overview
+                </Typography>
+                <Typography variant="body2">
+                    Food: {food}
+                    <br />
+                    Other: {other}
+                    <br />
+                    Groceries : {groceries}
+                    <br />
+                    Travelling : {travelling}
+                    <br />
+                    Savings : {income - (food + other + groceries + travelling)}
+                </Typography>
+            </CardContent>
+        </React.Fragment>
+    );
     const getExpense = () => {
         console.log("calculating expense");
         transactions.map((transaction) => {
@@ -61,9 +94,9 @@ const Dashboard = () => {
             }
             else if (transaction.ttype === "traveling") {
                 setTravelling(travelling + transaction.texpense);
-            }   
+            }
         })
-        
+
     }
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -79,37 +112,40 @@ const Dashboard = () => {
         //so by doing this we can call useeffect after updating of the transaction state and also it will not cause to render it again and again
         //here a bug is a new user and he wont have a tranasctions then it will cause rendered multiple time
         //solved by addig a basic flag
-        if(transactions.length === 0 && callTransactions===1){
+        if (transactions.length === 0 && callTransactions === 1) {
             console.log("getting user");
             console.log(callTransactions);
             axios.get(`${baseUrl}/userDetails/${email}`)
-            .then((res) => {
-                console.log(res.data.userInfo[0]);
-                setIncome(res.data.userInfo[0].income);
-                setTransactions(res.data.userInfo[0].transactions);
-                const responseArray = res.data.userInfo[0].transactions;
-                if(responseArray.length===0){
-                    console.log("Updated Value");
-                    callTransactions = 0;
-                }
-                console.log(`Updated Value ${callTransactions}`);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+                .then((res) => {
+                    console.log(res.data.userInfo[0]);
+                    setIncome(res.data.userInfo[0].income);
+                    setTransactions(res.data.userInfo[0].transactions);
+                    const responseArray = res.data.userInfo[0].transactions;
+                    if (responseArray.length === 0) {
+                        console.log("Updated Value");
+                        callTransactions = 0;
+                    }
+                    console.log(`Updated Value ${callTransactions}`);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         }
         getExpense();
-    }, [email , transactions])
+    }, [email, transactions])
     return (
-        <div className='pieChart'>
-            Dashboard
+        <div>
+
+            <div className='pieGrid'>
+                <div className="pieChart">
+                    <Pie data={data} />
+                    
+                </div>
+                <Box sx={{ minWidth: 280 }}>
+                <Card style = {{backgroundColor : '#2d2d39' , color : '#ffff' , border : '1px solid #fff'}} variant="outlined">{card}</Card>
+            </Box>
+            </div>
             
-            <Pie data={data} />
-            <p>Food : {food}</p>
-            <p>Other : {other}</p>
-            <p>Groceries : {groceries}</p>
-            <p>Travelling : {travelling}</p>
-            <p>Savings : {income - (food+other+groceries+travelling)}</p>
         </div>
     )
 }
