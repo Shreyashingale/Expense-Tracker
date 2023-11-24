@@ -3,6 +3,15 @@ import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import "./components.css"
 
 const Transactions = () => {
     //also check that issue why it's returning array and not a object
@@ -11,14 +20,10 @@ const Transactions = () => {
     const [email, setEmail] = useState('');
     const [transactions, setTransactions] = useState([]);
     const rows = transactions;
-
-    const [tId, setTId] = useState('');
+    let transactionsLength = 0;
     const [tType, setTType] = useState('');
     const [tExpense, setTExpense] = useState('');
 
-    const handleTIdChange = (e) => {
-        setTId(e.target.value);
-    }
     const handleTTypeChange = (e) => {
         setTType(e.target.value);
     }
@@ -26,15 +31,29 @@ const Transactions = () => {
         setTExpense(e.target.value);
     }
 
+    const [open, setOpen] = React.useState(false);
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const handleAddTransaction = () => {
         console.log("add transactions");
         const updatedTransaction = transactions.map(({ id: tid, ...rest }) => ({ tid, ...rest }))
-        const data = [...updatedTransaction, { tid: tId, ttype: tType, texpense: tExpense }];
+        transactionsLength = updatedTransaction.length + 1;
+        const data = [...updatedTransaction, { tid: transactionsLength, ttype: tType, texpense: tExpense }];
         console.log(data);
+        setOpen(false);
         axios.put(`${baseUrl}/updateTransactions/${email}`, data)
             .then((res) => {
                 const userTranactions = res.data.data.transactions;
+                
                 setTransactions(userTranactions.map(({ tid: id, ...res }) => ({
                     id, ...res
                 })));
@@ -83,8 +102,7 @@ const Transactions = () => {
 
     return (
 
-        <div>
-            Transactions
+        <div className='transactionGrid'>
             {/* i think js render every time any state chnages */}
             {/* {
                 transactions && transactions.map((transaction) => {
@@ -98,7 +116,61 @@ const Transactions = () => {
                     )
                 })
             } */}
-            <div style={{ height: 400, width: '100%' }}>
+            {/* <label>Tid : </label>
+            <input type="text" onChange={handleTIdChange} />
+            <label>Ttype : </label>
+            <input type="text" onChange={handleTTypeChange} />
+            <label>Expense</label>
+            <input type="text" onChange={handleTExpenseChange} />
+            <button onClick={handleAddTransaction}>Add Transaction</button> */}
+            
+                <Button className = "modalButton" variant="outlined" onClick={handleClickOpen}>
+                    + Add Transaction
+                </Button>
+                <Dialog
+                    fullScreen={fullScreen}
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="responsive-dialog-title"
+                >
+                    <DialogTitle id="responsive-dialog-title">
+                        {"Transaction"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Transaction Type"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            onChange={handleTTypeChange}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Transaction Amount"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            onChange={handleTExpenseChange}
+                        />
+
+                    </DialogContent>
+                    <DialogActions>
+                        {/* style={{ backgroundColor : "black" }}  */}
+                        <Button autoFocus onClick={handleClose}>
+                            Cancel
+                        </Button>
+                        <Button onClick={handleAddTransaction} autoFocus>
+                            Add
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
+            <div style={{ height: 400, width: '100%' , marginTop :'50px' }}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
@@ -111,13 +183,6 @@ const Transactions = () => {
                 />
             </div>
 
-            <label>Tid : </label>
-            <input type="text" onChange={handleTIdChange} />
-            <label>Ttype : </label>
-            <input type="text" onChange={handleTTypeChange} />
-            <label>Expense</label>
-            <input type="text" onChange={handleTExpenseChange} />
-            <button onClick={handleAddTransaction}>Add Transaction</button>
         </div>
     )
 }
