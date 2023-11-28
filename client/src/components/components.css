@@ -33,14 +33,12 @@
 
 }
 
-
 .sideNav a {
     text-decoration: none;
     color: #fff;
     display: block;
 }
 
-/* Change the background color of the list item when hovered */
 .sideNav li:hover {
     background-color: #000000;
 }
@@ -86,7 +84,7 @@
     display: flex;
     width: 100%;
     height: 93vh;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     background-color: #2d2d39;
  }
@@ -94,6 +92,17 @@
     margin-top: 0px;
     width: 30%;
     height: 80%;
+ }
+ .accountGrid{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    flex-direction: column;
+ }
+ .accountInfo{
+    width: 40%;
+    border: 2px solid #8e84e3;
  }
 /* Media query for responsiveness */
 @media (max-width: 768px) {
@@ -114,4 +123,10 @@
         border: 1px solid #ddd;
         border-radius: 15px;
     }
-}
+    .pieGrid{
+        flex-direction: column;
+    }
+    .pieChart{
+        width: 50%;
+    }
+} 

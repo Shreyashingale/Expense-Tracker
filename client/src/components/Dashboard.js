@@ -61,7 +61,7 @@ const Dashboard = () => {
     const card = (
         <React.Fragment>
             <CardContent>
-                <Typography sx={{ fontSize: 18 , color :'grey' , fontWeight : 'bold' }} color="text.secondary" gutterBottom>
+                <Typography sx={{ fontSize: 18, color: 'grey', fontWeight: 'bold' }} color="text.secondary" gutterBottom>
                     Overview
                 </Typography>
                 <Typography variant="body2">
@@ -137,13 +137,15 @@ const Dashboard = () => {
             <div className='pieGrid'>
                 <div className="pieChart">
                     <Pie data={data} />
-                    
                 </div>
-                <Box sx={{ minWidth: 280 }}>
-                <Card style = {{backgroundColor : '#2d2d39' , color : '#ffff' , border : '1px solid #fff'}} variant="outlined">{card}</Card>
-            </Box>
+                <div>
+                    <Box sx={{ minWidth: 280 }}>
+                        <Card style={{ backgroundColor: '#2d2d39', color: '#ffff', border: '1px solid #fff' }} variant="outlined">{card}</Card>
+                    </Box>
+                </div>
+
             </div>
-            
+
         </div>
     )
 }
