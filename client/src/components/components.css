@@ -104,10 +104,24 @@
     display: flex;
     width: 80%;
     height: 40%;
-    border: 2px solid #8e84e3;
     margin-top: 20px;
     justify-content: center;
  }
+ .userDetails li{
+    list-style: none;
+
+ }
+ .userDetails li span{
+    color: #8e84e3;
+    font-weight: 700;
+ }
+ li:first-child  {
+    color: #8e84e3;
+    font-size: 30px;
+    font-weight: 700;
+    border-bottom: 2px solid #8e84e3;
+    margin-bottom: 20px;
+  }
 /* Media query for responsiveness */
 @media (max-width: 768px) {
     

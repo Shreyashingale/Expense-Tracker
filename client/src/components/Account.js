@@ -81,12 +81,12 @@ const Account = () => {
                     // js inside curly react inside round in one div
                     userDetails && (
                         <div>
-                            <ul>
+                            <ul className="userDetails">
                                 <li>My Details </li>
-                                <li>Email : {userDetails.email}</li>
-                                <li>User : {userDetails.username}</li>
-                                <li>Income : {userDetails.income}</li>
-                                <li>Expenses : {userDetails.expenses}</li>
+                                <li><span>Email : </span>{userDetails.email}</li>
+                                <li><span>User : </span>{userDetails.username}</li>
+                                <li><span>Income : </span>{userDetails.income}</li>
+                                <li><span>Expenses : </span>{userDetails.expenses}</li>
                             </ul>
                         </div>
                     )
