@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
-
-
+const bcrypt = require('bcrypt');
 
 
 
@@ -29,12 +28,12 @@ router.post('/register' , async(req , res)=>{
                 console.log("User existed");
                 return res.status(400).json({ message: 'User Already Existed', userRegisterStatus : 0});
             }
-
+            const hashPassword = await bcrypt.hash(req.body.password , 10);
             const newUser = new User({
 
                 username : req.body.username ,
                 email : req.body.email ,
-                password : req.body.password,
+                password : hashPassword,
                 income : 0,
                 expenses : 0,
                 transaction : []
@@ -62,7 +61,8 @@ router.post('/login' , async(req , res)=>{
     console.log(req.body.email);
     const userLogin = await User.findOne({email:req.body.email});
     if(userLogin){
-        if(userLogin.password === req.body.password){
+        const matchPassword = bcrypt.compare(userLogin.password , req.body.password);
+        if(matchPassword){
                 res.status(200).json({message : 'User Logged in' , userLoginStatus : 1 , token : jwt.sign({email : req.body.email} , 'secretkey')});
 
         }

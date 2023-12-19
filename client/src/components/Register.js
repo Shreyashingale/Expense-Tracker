@@ -21,7 +21,7 @@ const Register = () => {
     .then((res)=>{
       console.log(res);
       if(res.data.userRegisterStatus === 1){
-        navigate('/login');
+        navigate('/');
       }
       console.log('User Registered');
     })
