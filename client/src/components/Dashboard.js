@@ -47,9 +47,6 @@ const Dashboard = () => {
             },
         ],
     };
-
-
-
     const bull = (
         <Box
             component="span"
@@ -104,12 +101,10 @@ const Dashboard = () => {
         }
         else {
             localStorage.removeItem('token');
-            navigate('/login');
+            alert("User Not Login");
+            navigate('/');
         }
         console.log(email);
-        //so by doing this we can call useeffect after updating of the transaction state and also it will not cause to render it again and again
-        //here a bug is a new user and he wont have a tranasctions then it will cause rendered multiple time
-        //solved by addig a basic flag
         if (transactions.length === 0 && callTransactions === 1) {
             console.log("getting user");
             console.log(callTransactions);
@@ -133,7 +128,6 @@ const Dashboard = () => {
     }, [email, transactions])
     return (
         <div>
-
             <div className='pieGrid'>
                 <div className="pieChart">
                     <Pie data={data} />
@@ -149,5 +143,4 @@ const Dashboard = () => {
         </div>
     )
 }
-
 export default Dashboard;

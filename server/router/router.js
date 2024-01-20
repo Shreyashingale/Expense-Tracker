@@ -3,16 +3,11 @@ const router = express.Router();
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
-
-
 //path and a callback function second parameter
 router.get('/' , (req , res)=>{
     res.send("Router Visited");
 
 })
-
-
 //register api
 /*
 register api flow
@@ -55,7 +50,6 @@ router.post('/register' , async(req , res)=>{
 => here first step is same get user credentials
 => then find user by email
 => after finding match the password
-
 */
 router.post('/login' , async(req , res)=>{
     console.log(req.body.email);

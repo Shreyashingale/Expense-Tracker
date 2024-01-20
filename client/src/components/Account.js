@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// space and dash not allowed in import
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -18,28 +17,23 @@ const Account = () => {
     const [userIncome, setUserIncome] = useState(0);
     const [userDetails, setUserDetails] = useState(null);
     const navigate = useNavigate();
-
     const [open, setOpen] = React.useState(false);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
     const handleClickOpen = () => {
         setOpen(true);
     };
-
     const handleClose = () => {
         setOpen(false);
     };
     const handleLogout = () => {
         localStorage.removeItem('token');
-        navigate('/login');
+        navigate('/');
     }
     const handleIncomeChange = (e) => {
         setUserIncome(e.target.value);
-
     }
     const updateUserIncome = () => {
-        // the second parameteris a req body object
         setOpen(false);
         axios.put(`${baseUrl}/updateIncome/${user}`, {
             income: userIncome
@@ -56,14 +50,13 @@ const Account = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            // after installing package read there latest doc
             const user = jwtDecode(token);
             console.log(user);
             setUser(user.email);
             console.log("from account page");
         }
         else {
-            navigate('/login')
+            navigate('/')
         }
         axios.get(`${baseUrl}/userDetails/${user}`)
             .then((res) => {
@@ -78,7 +71,6 @@ const Account = () => {
         <div className="accountGrid">
             <div className="accountInfo" >
                 {
-                    // js inside curly react inside round in one div
                     userDetails && (
                         <div>
                             <ul className="userDetails">
@@ -130,17 +122,8 @@ const Account = () => {
                         </Button>
                     </DialogActions>
                 </Dialog>
-
             </div>
-
-
         </div>
-
-
-
-
     )
 }
-
-
 export default Account;

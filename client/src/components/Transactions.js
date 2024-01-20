@@ -14,7 +14,6 @@ import TextField from '@mui/material/TextField';
 import "./components.css"
 
 const Transactions = () => {
-    //also check that issue why it's returning array and not a object
     const baseUrl = 'http://localhost:5000';
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -72,15 +71,13 @@ const Transactions = () => {
         }
         else {
             localStorage.removeItem('token');
-            navigate('/login');
+            alert("User Not Login"); 
+            navigate('/');
         }
         console.log(email);
-        //here the email is state so async in behaviour so that's why 
         axios.get(`${baseUrl}/userDetails/${email}`)
             .then((res) => {
-                // console.log(res.data.userInfo[0].transactions)
                 const userTranactions = res.data.userInfo[0].transactions;
-                //res.data.userInfo[0].transactions
                 setTransactions(userTranactions.map(({ tid: id, ...res }) => ({
                     id, ...res
                 })));
@@ -88,9 +85,6 @@ const Transactions = () => {
             .catch((error) => {
                 console.log(error);
             })
-
-
-
     }, [email])
 
 
@@ -101,29 +95,7 @@ const Transactions = () => {
     ];
 
     return (
-
         <div className='transactionGrid'>
-            {/* i think js render every time any state chnages */}
-            {/* {
-                transactions && transactions.map((transaction) => {
-                    return (<div key={transaction.id}>
-                        <h3>Transaction</h3>
-                        <p>tid : {transaction.id}</p>
-                        <p>T type : {transaction.ttype}</p>
-                        <p>expense : {transaction.texpense}</p>
-
-                    </div>
-                    )
-                })
-            } */}
-            {/* <label>Tid : </label>
-            <input type="text" onChange={handleTIdChange} />
-            <label>Ttype : </label>
-            <input type="text" onChange={handleTTypeChange} />
-            <label>Expense</label>
-            <input type="text" onChange={handleTExpenseChange} />
-            <button onClick={handleAddTransaction}>Add Transaction</button> */}
-            
                 <Button className = "modalButton" variant="outlined" onClick={handleClickOpen}>
                     + Add Transaction
                 </Button>
@@ -160,7 +132,6 @@ const Transactions = () => {
 
                     </DialogContent>
                     <DialogActions>
-                        {/* style={{ backgroundColor : "black" }}  */}
                         <Button autoFocus onClick={handleClose}>
                             Cancel
                         </Button>

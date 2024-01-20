@@ -58,9 +58,7 @@ const Login = () => {
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} />
-
                     </Form.Group>
-
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} />
@@ -71,7 +69,6 @@ const Login = () => {
                     <Button style={{ backgroundColor: '#303142' }} variant="dark" type="submit">
                         Login
                     </Button>
-
                 </Form>
             </div>
             <div>
@@ -80,6 +77,4 @@ const Login = () => {
         </div>
     )
 }
-
-
 export default Login;
